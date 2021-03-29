@@ -1,16 +1,16 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function login(params) {
   return request({
-    url: '/admin/login',
+    url: '/sso/doLogin',
     method: 'post',
-    data
+    params
   })
 }
 
 export function getInfo(token) {
   return request({
-    url: '/admin/info',
+    url: '/sso/info',
     method: 'get',
     params: { token }
   })

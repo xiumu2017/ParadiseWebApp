@@ -65,7 +65,7 @@ service.interceptors.response.use(
     if (res.code !== 200) {
       Dialog.$create({
         type: "alert",
-        title: "Alert",
+        title: "错误信息：",
         content: res.message,
       }).show();
     }
