@@ -1,10 +1,9 @@
 import axios from 'axios'
 import store from '@/store'
+import { router } from '../router';
 import { getToken } from '@/utils/auth'
-import Vue from 'vue'
-import { Dialog } from 'cube-ui'
+import { Dialog } from 'vant';
 
-Vue.use(Dialog)
 
 // create an axios instance
 const service = axios.create({
@@ -54,30 +53,42 @@ service.interceptors.response.use(
 
     const res = response.data
     // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
-    if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-      Dialog.$create({
-        type: "alert",
-        title: "Alert",
-        content: "dialog content",
-      }).show();
+    if (res.code === 50008 || res.code === 50012 || res.code === 50014 || res.code === 401) {
+      // Dialog.$create({
+      //   type: "alert",
+      //   title: "提示",
+      //   content: "登录过期，请重新登录~",
+      // }).show();
+      Dialog.alert({
+        title: '提示',
+        message: '登录过期，请重新登录~',
+        theme: 'round-button',
+      }).then(() => {
+        // on close
+        store.dispatch('user/logout').then(() => {
+          router.push('/login')
+          // 为了重新实例化vue-router对象 避免bug
+          location.reload()
+        })
+      });
       return Promise.reject('error')
     }
     if (res.code !== 200) {
-      Dialog.$create({
-        type: "alert",
-        title: "错误信息：",
-        content: res.message,
-      }).show();
+      Dialog.alert({
+        title: '提示',
+        message: res.message,
+        theme: 'round-button',
+      })
     }
     return response.data
   },
   error => {
-    console.log('err' + error) // for debug
-    Dialog.$create({
-      type: "alert",
-      title: "Alert",
-      content: error,
-    }).show();
+    console.error('err' + error) // for debug
+    Dialog.alert({
+      title: '提示',
+      message: error.message,
+      theme: 'round-button',
+    })
     return Promise.reject(error)
   }
 )

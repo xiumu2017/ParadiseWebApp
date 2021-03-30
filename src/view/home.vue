@@ -1,5 +1,15 @@
 <template>
-  <div>
+  <div class="main-app">
+    <div class="grid-div">
+      <van-grid clickable :column-num="3" :gutter="10" :square="true">
+        <van-grid-item icon="smile" text="饮食管理" to="/meal" />
+        <van-grid-item icon="home-o" text="路由跳转" to="/" />
+        <van-grid-item icon="home-o" text="路由跳转" to="/" />
+        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
+        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
+        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
+      </van-grid>
+    </div>
     <cube-tab-bar
       v-model="selectedLabel"
       show-slider
@@ -37,6 +47,10 @@
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
 import { login } from "@/api/user";
+import Vue from "vue";
+import { Grid, GridItem } from "vant";
+Vue.use(Grid);
+Vue.use(GridItem);
 
 export default {
   name: "home",
@@ -51,11 +65,7 @@ export default {
         {
           label: "Home",
           icon: "cubeic-home",
-          heroes: [
-            "敌法师",
-            "变体精灵",
-            "幻影长矛手"
-          ],
+          heroes: ["敌法师", "变体精灵", "幻影长矛手"],
         },
         {
           label: "Like",
@@ -100,3 +110,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.grid-div {
+  margin: 10px;
+}
+</style>

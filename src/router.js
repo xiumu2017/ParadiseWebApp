@@ -16,6 +16,20 @@ const routes = [
     }
   },
   {
+    name: 'meal',
+    component: () => import('./view/meal'),
+    meta: {
+      title: '饮食管理'
+    }
+  },
+  {
+    name: 'meal-form',
+    component: () => import('./view/meal/form'),
+    meta: {
+      title: '饮食管理'
+    }
+  },
+  {
     name: 'timeline',
     component: () => import('./view/timeline'),
     meta: {
