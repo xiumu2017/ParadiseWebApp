@@ -54,6 +54,9 @@ export default {
             item.title = item.date + " " + this.typeArr[item.type];
             item.payTypeStr = this.payTypeArr[item.payType];
           });
+          if (this.mealData && this.mealData.length > 0) {
+            this.showEmpty = false;
+          }
         }
       });
     },
