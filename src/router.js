@@ -37,6 +37,13 @@ const routes = [
     }
   },
   {
+    name: 'timeline-things',
+    component: () => import('./view/timeline/things'),
+    meta: {
+      title: '时光机'
+    }
+  },
+  {
     name: 'bing',
     component: () => import('./view/bing'),
     meta: {

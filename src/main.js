@@ -16,7 +16,14 @@ import { Col, Row } from 'vant';
 import { Cell, CellGroup } from 'vant';
 import { Image as VanImage } from 'vant';
 import { Divider } from "vant";
+import { Empty } from "vant";
+import { Tag } from 'vant';
+import { DatetimePicker } from 'vant';
+import '@vant/touch-emulator';
 
+Vue.use(DatetimePicker);
+Vue.use(Tag);
+Vue.use(Empty);
 Vue.use(Divider);
 Vue.use(VanImage);
 Vue.use(Cell);

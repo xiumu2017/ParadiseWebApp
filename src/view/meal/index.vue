@@ -12,16 +12,7 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { Empty } from "vant";
-import { Cell, CellGroup } from "vant";
-import { Button } from "vant";
 import { fetch, getPayTypes, getTypes } from "@/api/meal.js";
-
-Vue.use(Cell);
-Vue.use(CellGroup);
-Vue.use(Empty);
-Vue.use(Button);
 
 export default {
   name: "meal",
