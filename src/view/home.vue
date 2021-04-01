@@ -1,16 +1,18 @@
 <template>
   <div class="main-app">
     <div class="grid-div">
-      <van-grid clickable :column-num="3" :gutter="10" :square="true">
-        <van-grid-item icon="smile" text="饮食管理" to="/meal" />
-        <van-grid-item icon="home-o" text="路由跳转" to="/" />
-        <van-grid-item icon="home-o" text="路由跳转" to="/" />
-        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
-        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
-        <van-grid-item icon="search" text="URL 跳转" url="/vant/mobile.html" />
+      <van-grid clickable :column-num="2" :gutter="20" :square="true">
+        <van-grid-item icon="smile" text="吃的啥" to="/meal" />
+        <van-grid-item icon="photograph" text="时光机" to="/timeline" />
+        <van-grid-item icon="music" text="睡了没" to="/sleep" />
+        <van-grid-item icon="todo-list" text="要做的" to="/todo" />
+        <van-grid-item icon="balance-list" text="钱去哪" to="/bill" />
+        <van-grid-item icon="photo" text="看看图" to="/bing" />
+        <van-grid-item icon="like" text="诗" to="/poem" />
+        <van-grid-item icon="star" text="" to="/login" />
       </van-grid>
     </div>
-    <cube-tab-bar
+    <!-- <cube-tab-bar
       v-model="selectedLabel"
       show-slider
       @click="clickHandler"
@@ -40,7 +42,7 @@
           </li>
         </ul>
       </cube-tab-panel>
-    </cube-tab-panels>
+    </cube-tab-panels> -->
   </div>
 </template>
 

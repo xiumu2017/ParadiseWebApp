@@ -5,12 +5,16 @@
         readonly
         clickable
         name="date"
-        :value="date"
+        :value="formData.date"
         label="日期"
         placeholder="点击选择日期"
         @click="showCalendar = true"
       />
-      <van-calendar v-model="showCalendar" @confirm="onConfirm4Date" />
+      <van-calendar
+        v-model="showCalendar"
+        :min-date="minDate"
+        @confirm="onConfirm4Date"
+      />
       <van-field
         readonly
         clickable
@@ -29,21 +33,21 @@
         />
       </van-popup>
       <van-field
-        v-model="what"
+        v-model="formData.what"
         name="what"
         label="吃什么"
         placeholder=""
         :rules="[{ required: true, message: '请填写吃什么' }]"
       />
       <van-field
-        v-model="place"
+        v-model="formData.place"
         name="place"
         label="在哪儿吃"
         placeholder=""
         :rules="[{ required: true, message: '请填写在哪儿吃' }]"
       />
       <van-field
-        v-model="cost"
+        v-model="formData.cost"
         type="number"
         name="cost"
         label="花了多少"
@@ -68,7 +72,7 @@
         />
       </van-popup>
       <van-field
-        v-model="remark"
+        v-model="formData.remark"
         rows="3"
         autosize
         label="备注"
@@ -86,32 +90,25 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { Form } from "vant";
-import { Calendar } from "vant";
-import { Field } from "vant";
-import { Button } from "vant";
-import { Picker } from "vant";
-import { Popup } from "vant";
 import { create, getPayTypes, getTypes } from "@/api/meal.js";
-
-Vue.use(Picker);
-Vue.use(Popup);
-Vue.use(Form);
-Vue.use(Calendar);
-Vue.use(Field);
-Vue.use(Button);
 
 export default {
   data() {
     return {
-      what: "",
-      place: "",
-      cost: "",
+      minDate: new Date(2021, 0, 1),
+      maxDate: new Date(2021, 5, 1),
+      formData: {
+        what: "",
+        place: "",
+        cost: "",
+        date: "",
+        type: "",
+        payType: "",
+        remark: "",
+      },
       date: "",
       type: "",
       payType: "",
-      remark: "",
       showCalendar: false,
       showPicker: false,
       showPayTypePicker: false,
@@ -128,29 +125,34 @@ export default {
     });
   },
   methods: {
-    onSubmit(values) {
-      console.log("submit", values);
-
-      create(values).then((res) => {
+    onSubmit() {
+      const data = Object.assign({}, this.formData);
+      data.date = data.date + " 00:00:00";
+      data.cost = data.cost * 100;
+      console.log("提交用餐数据：", data);
+      create(data).then((res) => {
         if (res.code === 200) {
           this.$toast.success(res.message);
+          this.$router.push('meal');
         } else {
           this.$toast.fail(res.message);
         }
       });
     },
     onConfirm4Date(date) {
-      this.date =
-        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}` +
-        " 00:00:00";
+      this.formData.date = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`;
       this.showCalendar = false;
     },
     onConfirm4Type(value, index) {
-      this.type = index;
+      this.formData.type = index;
+      this.type = value;
       this.showPicker = false;
     },
     onConfirm4PayType(value, index) {
-      this.payType = index;
+      this.formData.payType = index;
+      this.payType = value;
       this.showPayTypePicker = false;
     },
   },

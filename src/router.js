@@ -47,7 +47,14 @@ const routes = [
     name: 'home',
     component: () => import('./view/home'),
     meta: {
-      title: '商品详情'
+      title: 'HomePage'
+    }
+  },
+  {
+    name: 'sleep',
+    component: () => import('./view/sleep'),
+    meta: {
+      title: '睡了么'
     }
   }
 ];

@@ -1,74 +1,61 @@
 <template>
   <div class="login-container">
-    <cube-form
-      :model="model"
-      :schema="schema"
-      :immediate-validate="false"
-      :options="options"
-      @validate="validateHandler"
-      @submit="submitHandler"
-      @reset="resetHandler"
-    ></cube-form>
+    <van-row type="flex" justify="center" style="margin-top: 5%">
+      <van-image
+        width="100%"
+        height="auto"
+        src="https://cn.bing.com//th?id=OHR.BifengxiaPanda_ZH-CN8879969527_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"
+      />
+    </van-row>
+    <van-row style="margin-top: 5%">
+      <van-divider
+        :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }"
+        >欢迎登录</van-divider
+      >
+    </van-row>
+    <van-row style="margin-top: 5%">
+      <van-cell-group>
+        <van-field
+          v-model="model.username"
+          name="username"
+          label="用户名"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+      </van-cell-group>
+      <!-- </van-row>
+    <van-row gutter="20"> -->
+      <van-cell-group>
+        <van-field
+          v-model="model.password"
+          :type="passwordType"
+          name="password"
+          :right-icon="icon"
+          label="密码"
+          placeholder="密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+          @click-right-icon="showPassword"
+          ref="password"
+        />
+      </van-cell-group>
+    </van-row>
+    <van-row style="margin-top: 5%">
+      <van-button round block type="info" @click="onSubmit">提交</van-button>
+    </van-row>
   </div>
 </template>
 
 <script>
-// import { login } from "@/api/user";
-
 export default {
   name: "Login",
   data() {
     return {
-      validity: {},
-      valid: undefined,
-      loading: false,
       redirect: undefined,
+      icon: "closed-eye",
+      passwordType: "password",
       model: {
         username: "",
         password: "",
-      },
-      schema: {
-        fields: [
-          {
-            type: "input",
-            modelKey: "username",
-            label: "用户名",
-            props: {
-              placeholder: "请输入用户名",
-            },
-            rules: {
-              required: true,
-            },
-            // validating when blur
-            trigger: "blur",
-          },
-          {
-            type: "input",
-            modelKey: "password",
-            label: "密码",
-            props: {
-              placeholder: "请输入",
-              type: "password",
-              eye: {
-                open: false,
-                reverse: false,
-              },
-            },
-            rules: {
-              required: true,
-            },
-            // validating when blur
-            trigger: "blur",
-          },
-          {
-            type: "submit",
-            label: "Submit",
-          },
-        ],
-      },
-      options: {
-        scrollToInvalidField: true,
-        layout: "standard", // classic fresh
       },
     };
   },
@@ -81,69 +68,28 @@ export default {
     },
   },
   methods: {
-    submitHandler(e) {
-      e.preventDefault();
-      // login(this.model).then((res) => {
-      //   console.log("res", res);
-      //   if (res.code === 200) {
-      //     this.$createToast({
-      //       txt: "登录成功",
-      //       type: "correct",
-      //     }).show();
-      //     this.$router.push('home')
-      //   }
-      // });
-       this.$store
-            .dispatch("user/login", this.model)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/home" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
+    onSubmit(values) {
+      console.log("submit", values);
+      this.$store
+        .dispatch("user/login", this.model)
+        .then(() => {
+          this.$router.push({ path: this.redirect || "/home" });
+          this.loading = false;
+          this.$toast.success("登录成功");
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
-    validateHandler(result) {
-      this.validity = result.validity;
-      this.valid = result.valid;
-      console.log(
-        "validity",
-        result.validity,
-        result.valid,
-        result.dirty,
-        result.firstInvalidFieldIndex
-      );
-    },
-    resetHandler(e) {
-      console.log("reset", e);
-    },
-    showPwd() {
+    showPassword() {
       if (this.passwordType === "password") {
         this.passwordType = "";
+        this.icon = "eye-o";
       } else {
         this.passwordType = "password";
       }
       this.$nextTick(() => {
         this.$refs.password.focus();
-      });
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
       });
     },
   },
