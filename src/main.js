@@ -19,8 +19,12 @@ import { Divider } from "vant";
 import { Empty } from "vant";
 import { Tag } from 'vant';
 import { DatetimePicker } from 'vant';
+import { Sticky } from 'vant';
+import FloatBtn from './components/FloatBtn.vue'
 import '@vant/touch-emulator';
 
+Vue.use(FloatBtn);
+Vue.use(Sticky);
 Vue.use(DatetimePicker);
 Vue.use(Tag);
 Vue.use(Empty);

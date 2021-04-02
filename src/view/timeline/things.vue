@@ -1,5 +1,5 @@
 <template>
-  <div class="timeline-form">
+  <div class="timeline-form" style="">
     <van-form @submit="onSubmit">
       <van-field
         readonly
@@ -81,12 +81,18 @@
         type="textarea"
         placeholder="请输入备注"
       />
-      <van-uploader
-        :after-read="afterRead"
-        v-model="fileList"
-        multiple
-        :max-count="2"
-      />
+      <van-cell
+        >添加照片
+
+        <van-uploader
+          :after-read="afterRead"
+          v-model="fileList"
+          multiple
+          :max-count="2"
+          style="margin-left: 10%"
+        />
+      </van-cell>
+
       <div style="margin: 16px">
         <van-button round block type="info" native-type="submit"
           >提交</van-button
@@ -118,17 +124,25 @@ export default {
         remark: "",
       },
       date: "",
-      type: "",
-      payType: "",
       showCalendar: false,
-      showPicker: false,
       fileList: [],
       photos: [],
       showStartTimePicker: false,
       showEndTimePicker: false,
     };
   },
-  created() {},
+  created() {
+    const now = new Date();
+    // 默认显示日期=今天
+    this.onConfirm4Date(now);
+    // 默认当前时间
+    const time =
+      this.fillWithZero(now.getHours()) +
+      ":" +
+      this.fillWithZero(now.getMinutes());
+    this.formData.startTime = time;
+    this.formData.endTime = time;
+  },
   methods: {
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
@@ -163,9 +177,9 @@ export default {
       });
     },
     onConfirm4Date(date) {
-      this.formData.date = `${date.getFullYear()}-${
+      this.formData.date = `${date.getFullYear()}-${this.fillWithZero(
         date.getMonth() + 1
-      }-${date.getDate()}`;
+      )}-${this.fillWithZero(date.getDate())}`;
       this.showCalendar = false;
     },
     onConfirm4StartTime(time) {
@@ -175,6 +189,9 @@ export default {
     onConfirm4EndTime(time) {
       this.formData.endTime = time;
       this.showEndTimePicker = false;
+    },
+    fillWithZero(d) {
+      return d < 10 ? "0" + d : d;
     },
   },
 };

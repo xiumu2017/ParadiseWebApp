@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="timeline" style="margin: 5px">
     <van-empty v-if="showEmpty" description="暂无数据" />
     <van-cell-group
       v-for="item in timelineData"
@@ -20,15 +20,17 @@
       </van-cell>
       <van-cell title="在哪儿" :value="item.location" />
     </van-cell-group>
-    <van-button type="info" block to="/timeline-things">添加新记录</van-button>
+    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
 <script>
 import { fetch } from "@/api/timeline.js";
+import FloatBtn from "../../components/FloatBtn.vue";
 
 export default {
   name: "meal",
+  components: { FloatBtn },
   created() {
     this.fetchData();
     if (this.timelineData && this.timelineData.length > 0) {
@@ -64,6 +66,9 @@ export default {
     },
     formatTime(date) {
       return date.split(" ")[1];
+    },
+    onFloatBtnClicked() {
+      this.$router.push("timeline-things");
     },
   },
 };

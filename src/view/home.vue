@@ -1,7 +1,7 @@
 <template>
-  <div class="main-app">
+  <div class="main-app" style="margin: 1px">
     <div class="grid-div">
-      <van-grid clickable :column-num="2" :gutter="20" :square="true">
+      <van-grid clickable :column-num="2" :gutter="10" :square="false">
         <van-grid-item icon="smile" text="吃的啥" to="/meal" />
         <van-grid-item icon="photograph" text="时光机" to="/timeline" />
         <van-grid-item icon="music" text="睡了没" to="/sleep" />
