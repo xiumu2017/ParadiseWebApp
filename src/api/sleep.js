@@ -8,10 +8,17 @@ export function fetch(params) {
     })
 }
 
-export function create(data) {
+export function sign(data) {
     return request({
-        url: '/sleep-record/create',
-        method: 'post',
+        url: '/sleep-record/sign' + '?type=' + data,
+        method: 'post'
+    })
+}
+
+export function update(id, data) {
+    return request({
+        url: '/sleep-record/' + id,
+        method: 'put',
         data
     })
 }
