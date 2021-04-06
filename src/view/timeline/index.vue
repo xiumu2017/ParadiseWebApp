@@ -19,6 +19,11 @@
         </template>
       </van-cell>
       <van-cell title="在哪儿" :value="item.location" />
+      <van-cell
+        title="图片"
+        @click="showPhotos(item)"
+        :value="item.hasPhotosText"
+      />
     </van-cell-group>
     <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
@@ -27,6 +32,7 @@
 <script>
 import { fetch } from "@/api/timeline.js";
 import FloatBtn from "../../components/FloatBtn.vue";
+import { ImagePreview } from "vant";
 
 export default {
   name: "meal",
@@ -54,6 +60,17 @@ export default {
               this.formatTime(item.startTime) +
               " ~ " +
               this.formatTime(item.endTime);
+            if (
+              item.photos &&
+              item.photos !== "/" &&
+              item.photos.split(",").length > 0
+            ) {
+              item.hasPhotos = true;
+              item.hasPhotosText = "查看";
+            } else {
+              item.hasPhotos = false;
+              item.hasPhotosText = "暂无图片";
+            }
           });
           if (this.timelineData && this.timelineData.length > 0) {
             this.showEmpty = false;
@@ -69,6 +86,11 @@ export default {
     },
     onFloatBtnClicked() {
       this.$router.push("timeline-things");
+    },
+    showPhotos(item) {
+      if (item.hasPhotos) {
+        ImagePreview(item.photos.split(","));
+      }
     },
   },
 };
