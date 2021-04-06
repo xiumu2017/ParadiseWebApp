@@ -7,15 +7,17 @@
       <van-cell title="花了多少" :value="item.cost" />
       <van-cell title="支付方式" :value="item.payTypeStr" />
     </van-cell-group>
-    <van-button type="info" block to="/meal-form">添加新记录</van-button>
+    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
 <script>
 import { fetch, getPayTypes, getTypes } from "@/api/meal.js";
+import FloatBtn from "../../components/FloatBtn.vue";
 
 export default {
   name: "meal",
+  components: { FloatBtn },
   created() {
     getPayTypes().then((res) => {
       this.payTypeArr = res.data;
@@ -38,18 +40,26 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch({ pageNum: 1, pageSize: 5 }).then((res) => {
+      fetch({ pageNum: 1, pageSize: 15 }).then((res) => {
         if (res.code === 200) {
           this.mealData = res.data.list;
           this.mealData.forEach((item) => {
-            item.title = item.date + " " + this.typeArr[item.type];
+            item.title =
+              this.formatDate(item.date) + " " + this.typeArr[item.type];
             item.payTypeStr = this.payTypeArr[item.payType];
+            item.cost = item.cost / 100;
           });
           if (this.mealData && this.mealData.length > 0) {
             this.showEmpty = false;
           }
         }
       });
+    },
+    formatDate(date) {
+      return date.split(" ")[0];
+    },
+    onFloatBtnClicked() {
+      this.$router.push("meal-form");
     },
   },
 };
