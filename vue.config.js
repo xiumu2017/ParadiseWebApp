@@ -45,5 +45,5 @@ module.exports = {
         '@': resolve('src')
       }
     }
-  },
+  }
 }

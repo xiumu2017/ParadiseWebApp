@@ -67,8 +67,11 @@
       />
       <van-field
         v-model="formData.location"
+        rows="2"
+        autosize
         name="location"
         label="在哪儿"
+        type="textarea"
         placeholder="在哪里呢~"
         :rules="[{ required: true, message: '请填写在哪儿' }]"
       />
@@ -99,6 +102,21 @@
         >
       </div>
     </van-form>
+    <baidu-map
+      class="bm-view"
+      center="合肥"
+      ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"
+      @ready="handler"
+      style="display: none"
+    >
+      <bm-geolocation
+        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
+        :showAddressBar="true"
+        :autoLocation="true"
+        @locationSuccess="locationSuccess"
+        @locationError="locationError"
+      ></bm-geolocation>
+    </baidu-map>
   </div>
 </template>
 
@@ -107,9 +125,12 @@ import { create } from "@/api/timeline.js";
 import { upload } from "@/api/upload.js";
 import Vue from "vue";
 import { Uploader } from "vant";
+import BaiduMap from "vue-baidu-map/components/map/Map.vue";
+import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
 
 Vue.use(Uploader);
 export default {
+  components: { BaiduMap, BmGeolocation },
   data() {
     return {
       minDate: new Date(2021, 0, 1),
@@ -129,6 +150,7 @@ export default {
       photos: [],
       showStartTimePicker: false,
       showEndTimePicker: false,
+      center: {},
     };
   },
   created() {
@@ -193,6 +215,44 @@ export default {
     fillWithZero(d) {
       return d < 10 ? "0" + d : d;
     },
+    locationSuccess(point, AddressComponent, marker) {
+      console.log("point", point);
+      console.log("address", AddressComponent);
+      console.log("marker", marker);
+    },
+    locationError(StatusCode) {
+      console.log("status", StatusCode);
+    },
+    handler({ BMap }) {
+      // console.log("map", map);
+      const that = this;
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function (r) {
+        console.log("res", r);
+        console.log("status", this.getStatus());
+        if (this.getStatus() === 0) {
+          that.center.lng = r.longitude;
+          that.center.lat = r.latitude;
+          console.log(that.center);
+          let address = r.address;
+          that.formData.location =
+            address.province +
+            address.city +
+            address.district +
+            address.street +
+            address.street_number +
+            `(${r.longitude},${r.latitude})`;
+        } else {
+          that.$toast.fail("位置信息获取失败");
+        }
+      });
+    },
   },
 };
 </script>
+<style>
+.bm-view {
+  width: 100%;
+  height: 300px;
+}
+</style>
