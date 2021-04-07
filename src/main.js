@@ -22,6 +22,8 @@ import { DatetimePicker } from 'vant';
 import { Sticky } from 'vant';
 import FloatBtn from './components/FloatBtn.vue'
 import '@vant/touch-emulator';
+import './vconsole.js'
+
 
 Vue.use(FloatBtn);
 Vue.use(Sticky);

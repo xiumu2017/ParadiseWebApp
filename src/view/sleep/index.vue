@@ -133,11 +133,15 @@ export default {
         if (res.code === 200) {
           this.sleepData = res.data.list;
           this.sleepData.forEach((item) => {
-            item.title = this.weeks[new Date(item.date).getDay()];
+            // iOS 下这种获取 date 的方法不生效
+            // item.title = this.weeks[new Date(item.date).getDay()];
+            let d = new Date(item.date.replace(/-/g, "/")).getDay();
+            item.title = this.weeks[d];
             item.date = this.formatDate(item.date);
             item.st = this.formatDateTime(item.sleepTime);
             item.et = this.formatDateTime(item.upTime);
           });
+          console.log("sleepData", this.sleepData);
         }
       });
     },
