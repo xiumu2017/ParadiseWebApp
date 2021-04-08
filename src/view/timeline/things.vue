@@ -117,6 +117,7 @@
         @locationError="locationError"
       ></bm-geolocation>
     </baidu-map>
+    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
@@ -127,10 +128,11 @@ import Vue from "vue";
 import { Uploader } from "vant";
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
+import FloatBtn from "../../components/FloatBtn.vue";
 
 Vue.use(Uploader);
 export default {
-  components: { BaiduMap, BmGeolocation },
+  components: { BaiduMap, BmGeolocation, FloatBtn },
   data() {
     return {
       minDate: new Date(2021, 0, 1),
@@ -166,6 +168,9 @@ export default {
     this.formData.endTime = time;
   },
   methods: {
+    onFloatBtnClicked() {
+      this.$router.push("home");
+    },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file);

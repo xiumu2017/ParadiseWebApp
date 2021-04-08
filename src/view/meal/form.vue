@@ -86,13 +86,16 @@
         >
       </div>
     </van-form>
+    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
 <script>
 import { create, getPayTypes, getTypes } from "@/api/meal.js";
+import FloatBtn from "../../components/FloatBtn.vue";
 
 export default {
+  components: { FloatBtn },
   data() {
     return {
       minDate: new Date(2021, 0, 1),
@@ -133,7 +136,7 @@ export default {
       create(data).then((res) => {
         if (res.code === 200) {
           this.$toast.success(res.message);
-          this.$router.push('meal');
+          this.$router.push("meal");
         } else {
           this.$toast.fail(res.message);
         }
@@ -154,6 +157,9 @@ export default {
       this.formData.payType = index;
       this.payType = value;
       this.showPayTypePicker = false;
+    },
+    onFloatBtnClicked() {
+      this.$router.push("home");
     },
   },
 };
