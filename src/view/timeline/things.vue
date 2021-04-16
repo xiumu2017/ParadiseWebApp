@@ -107,7 +107,6 @@
       center="合肥"
       ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"
       @ready="handler"
-      style="display: none"
     >
       <bm-geolocation
         anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
@@ -257,7 +256,7 @@ export default {
 </script>
 <style>
 .bm-view {
-  width: 100%;
+  width: 98%;
   height: 300px;
 }
 </style>
