@@ -23,8 +23,12 @@ import { Sticky } from 'vant';
 import FloatBtn from './components/FloatBtn.vue'
 import '@vant/touch-emulator';
 import './vconsole.js'
+import { NavBar } from 'vant';
+import { Tabbar, TabbarItem } from 'vant';
 
-
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
+Vue.use(NavBar);
 Vue.use(FloatBtn);
 Vue.use(Sticky);
 Vue.use(DatetimePicker);
