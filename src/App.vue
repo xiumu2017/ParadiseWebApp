@@ -47,10 +47,22 @@ export default {
       return this.$route.path;
     },
     showTopNav() {
-      return this.$route.showTopNav || true;
+      console.log("computed-show-top-nav", this.$route.meta.showTopNav);
+      if (
+        this.$route.meta.showTopNav ||
+        this.$route.meta.showTopNav === undefined
+      ) {
+        return true;
+      }
+      return false;
     },
     showBottomNav() {
-      return this.$route.showBottomNav || true;
+      if (this.$route.meta.showBottomNav ||
+      this.$route.meta.showBottomNav === undefined
+      ) {
+        return true;
+      }
+      return false;
     },
     sidebar() {
       return this.$store.state.app.sidebar;
@@ -69,11 +81,15 @@ export default {
         mobile: this.device === "mobile",
       };
     },
+    title() {
+      console.log('title', this.$route.meta.title)
+      return this.$route.meta.title;
+    },
   },
+  watch: {},
   data() {
     return {
       active: 0,
-      title: document.title,
     };
   },
   methods: {
@@ -82,7 +98,7 @@ export default {
     },
     onClickLeft() {
       Toast("返回");
-      this.back()
+      this.$router.back();
     },
     onClickRight() {
       Toast("按钮");
@@ -90,11 +106,7 @@ export default {
     },
     onChange(index) {
       Notify({ type: "primary", message: index });
-    },
-    back() {
-      console.log('route', this.$route)
-      this.$router.push('/home');
-    },
+    }
   },
 };
 </script>

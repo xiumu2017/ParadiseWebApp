@@ -6,13 +6,19 @@ Vue.use(Router);
 const routes = [
   {
     path: '*',
-    redirect: '/home'
+    redirect: '/home',
+    meta: {
+      showBottomNav: false,
+      showTopNav: false,
+    }
   },
   {
     name: 'login',
     component: () => import('./view/login'),
     meta: {
-      title: '登录'
+      title: '登录',
+      showBottomNav: false,
+      showTopNav: false,
     }
   },
   {
@@ -54,7 +60,9 @@ const routes = [
     name: 'home',
     component: () => import('./view/home'),
     meta: {
-      title: 'HomePage'
+      title: 'HomePage',
+      showTopNav: false,
+      showBottomNav: false,
     }
   },
   {
