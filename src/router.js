@@ -62,7 +62,7 @@ const routes = [
     meta: {
       title: 'HomePage',
       showTopNav: false,
-      showBottomNav: false,
+      showBottomNav: true,
     }
   },
   {

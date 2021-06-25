@@ -53,7 +53,7 @@ export default {
     coefficientHeight: {
       // 从上到下距离比例
       type: Number,
-      default: 0.85,
+      default: 0.8,
     },
   },
   created() {
@@ -145,7 +145,7 @@ export default {
     align-items: center;
     z-index: 999;
     background: rgba(0, 0, 0, 0.15);
-    border-radius: 30px;
+    border-radius: 40px;
     cursor: pointer;
     .text {
       font-size: 30px;

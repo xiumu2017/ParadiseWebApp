@@ -91,7 +91,7 @@
           :after-read="afterRead"
           v-model="fileList"
           multiple
-          :max-count="2"
+          :max-count="3"
           style="margin-left: 10%"
         />
       </van-cell>
@@ -116,22 +116,20 @@
         @locationError="locationError"
       ></bm-geolocation>
     </baidu-map>
-    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
 <script>
 import { create } from "@/api/timeline.js";
-import { upload } from "@/api/upload.js";
+import { upload } from "@/utils/upload.js";
 import Vue from "vue";
 import { Uploader } from "vant";
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
-import FloatBtn from "../../components/FloatBtn.vue";
 
 Vue.use(Uploader);
 export default {
-  components: { BaiduMap, BmGeolocation, FloatBtn },
+  components: { BaiduMap, BmGeolocation },
   data() {
     return {
       minDate: new Date(2021, 0, 1),
@@ -167,24 +165,48 @@ export default {
     this.formData.endTime = time;
   },
   methods: {
-    onFloatBtnClicked() {
-      this.$router.push("home");
-    },
-    afterRead(file) {
+    // afterRead(file) {
+    //   // 此时可以自行将文件上传至服务器
+    //   console.log(file);
+    //   const fileData = new FormData();
+    //   fileData.append("file", file.file);
+    //   upload(fileData).then((res) => {
+    //     if (res.code === 200) {
+    //       this.$toast.success("上传成功");
+    //       console.log("fileList", this.fileList);
+    //       this.photos.push(res.data.url);
+    //       console.log("photos", this.photos);
+    //     } else {
+    //       this.$toast.fail(res.message);
+    //     }
+    //   });
+    // },
+    afterRead(f) {
       // 此时可以自行将文件上传至服务器
+      const file = f.file;
       console.log(file);
-      const fileData = new FormData();
-      fileData.append("file", file.file);
-      upload(fileData).then((res) => {
-        if (res.code === 200) {
-          this.$toast.success("上传成功");
-          console.log("fileList", this.fileList);
-          this.photos.push(res.data.url);
-          console.log("photos", this.photos);
-        } else {
-          this.$toast.fail(res.message);
+      const key = new Date().getTime() + "-" +  file.name;
+      const this_ = this;
+      upload(
+        file,
+        key,
+        function (url) {
+          this_.$toast.success("上传成功");
+          console.log("fileList", this_.fileList);
+          this_.photos.push("https://" + url);
+          console.log("photos", this_.photos);
+        },
+        function (progressData) {
+          console.log("progressData", progressData);
+          if (progressData.percent < 1) {
+            f.status = "uploading";
+            f.message = "上传中...";
+          }
+          if (progressData.percent >= 1) {
+            f.status = "done";
+          }
         }
-      });
+      );
     },
     onSubmit() {
       const data = Object.assign({}, this.formData);

@@ -7,14 +7,14 @@
     />
 
     <!-- 开启顶部安全区适配 -->
-    <van-nav-bar safe-area-inset-top />
+    <van-nav-bar safe-area-inset-top v-show="isWebview"/>
 
     <div :class="{ 'fixed-header': fixedHeader }">
       <van-nav-bar
         v-show="showTopNav"
         :title="title"
         left-text="返回"
-        right-text="按钮"
+        right-text="···"
         left-arrow
         @click-left="onClickLeft"
         @click-right="onClickRight"
@@ -28,10 +28,11 @@
       </transition>
     </section>
     <van-tabbar v-model="active" @change="onChange" v-show="showBottomNav">
-      <van-tabbar-item icon="home-o">标签1</van-tabbar-item>
-      <van-tabbar-item icon="search">标签2</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">标签3</van-tabbar-item>
-      <van-tabbar-item icon="setting-o">标签4</van-tabbar-item>
+      <van-tabbar-item icon="home-o" to="home">首页</van-tabbar-item>
+      <van-tabbar-item icon="records">记录</van-tabbar-item>
+      <van-tabbar-item icon="plus"></van-tabbar-item>
+      <van-tabbar-item icon="chart-trending-o" to="bing">统计</van-tabbar-item>
+      <van-tabbar-item icon="user-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -90,6 +91,7 @@ export default {
   data() {
     return {
       active: 0,
+      isWebview: false
     };
   },
   methods: {
@@ -97,12 +99,10 @@ export default {
       this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     },
     onClickLeft() {
-      Toast("返回");
       this.$router.back();
     },
     onClickRight() {
-      Toast("按钮");
-      this.$router.go(-1);
+      Toast("···");
     },
     onChange(index) {
       Notify({ type: "primary", message: index });
