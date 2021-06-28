@@ -23,3 +23,10 @@ export function update(id, data) {
     })
 }
 
+export function create(data) {
+    return request({
+        url: '/sleep-record',
+        method: 'post',
+        data
+    })
+}

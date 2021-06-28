@@ -72,6 +72,7 @@
         </van-cell>
       </van-cell-group>
     </van-row>
+    <float-btn @onFloatBtnClicked="onFloatBtnClicked" />
   </div>
 </template>
 
@@ -80,11 +81,13 @@ import { sign, fetch } from "@/api/sleep.js";
 import { Dialog } from "vant";
 import Vue from "vue";
 import { Rate } from "vant";
+import FloatBtn from "../../components/FloatBtn.vue";
 
 Vue.use(Rate);
 let interval;
 export default {
   name: "sleep",
+  components: { FloatBtn },
   data() {
     return {
       now: "大漠孤烟直，长河落日圆",
@@ -116,6 +119,9 @@ export default {
     }
   },
   methods: {
+    onFloatBtnClicked() {
+      this.$router.push("sleep-form");
+    },
     formatTime() {
       const now = new Date();
       return (

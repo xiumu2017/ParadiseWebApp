@@ -71,6 +71,13 @@ const routes = [
     meta: {
       title: '睡了么'
     }
+  },
+  {
+    name: 'sleep-form',
+    component: () => import('./view/sleep/form'),
+    meta: {
+      title: '记录睡眠'
+    }
   }
 ];
 

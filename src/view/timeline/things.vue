@@ -84,17 +84,17 @@
         type="textarea"
         placeholder="请输入备注"
       />
-      <van-cell
-        >添加照片
-
-        <van-uploader
-          :after-read="afterRead"
-          v-model="fileList"
-          multiple
-          :max-count="3"
-          style="margin-left: 10%"
-        />
-      </van-cell>
+      <van-field name="uploader" label="添加照片">
+        <template #input>
+          <van-uploader
+            :after-read="afterRead"
+            v-model="fileList"
+            multiple
+            :max-count="3"
+            style="margin-left: 10%"
+          />
+        </template>
+      </van-field>
 
       <div style="margin: 16px">
         <van-button round block type="info" native-type="submit"
@@ -185,7 +185,7 @@ export default {
       // 此时可以自行将文件上传至服务器
       const file = f.file;
       console.log(file);
-      const key = new Date().getTime() + "-" +  file.name;
+      const key = new Date().getTime() + "-" + file.name;
       const this_ = this;
       upload(
         file,
