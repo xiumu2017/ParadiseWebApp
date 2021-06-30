@@ -48,7 +48,6 @@ export default {
       return this.$route.path;
     },
     showTopNav() {
-      console.log("computed-show-top-nav", this.$route.meta.showTopNav);
       if (
         this.$route.meta.showTopNav ||
         this.$route.meta.showTopNav === undefined
@@ -83,14 +82,13 @@ export default {
       };
     },
     title() {
-      console.log('title', this.$route.meta.title)
       return this.$route.meta.title;
     },
   },
   watch: {},
   data() {
     return {
-      active: 0,
+      active: 10,
       isWebview: false
     };
   },

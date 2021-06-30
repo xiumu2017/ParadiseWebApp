@@ -10,6 +10,7 @@
         <van-grid-item icon="photo" text="看看图" to="/bing" />
         <van-grid-item icon="like" text="诗" to="/poem" />
         <van-grid-item icon="star" text="" to="/login" />
+        <van-grid-item icon="setting" text="Console开关" @click="showVconsole" />
       </van-grid>
     </div>
     <!-- <cube-tab-bar
@@ -82,6 +83,7 @@ export default {
           icon: "cubeic-person",
         },
       ],
+      showConsole: true,
     };
   },
   methods: {
@@ -108,6 +110,17 @@ export default {
       login(param).then((res) => {
         console.log("res", res);
       });
+    },
+    showVconsole() {
+      if (this.showConsole) {
+        document.getElementById("__vconsole").style.display = "none";
+        this.showConsole = false;
+        this.$toast.success("Console \n已隐藏");
+      } else {
+        document.getElementById("__vconsole").style = "";
+        this.showConsole = true;
+        this.$toast.success("Console \n已开启");
+      }
     },
   },
 };
