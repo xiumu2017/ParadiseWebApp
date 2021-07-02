@@ -62,27 +62,7 @@ export default {
   },
   data() {
     return {
-      selectedLabelDefault: "Vip",
       selectedLabel: "Home",
-      tabs: [
-        {
-          label: "Home",
-          icon: "cubeic-home",
-          heroes: ["敌法师", "变体精灵", "幻影长矛手"],
-        },
-        {
-          label: "Like",
-          icon: "cubeic-like",
-        },
-        {
-          label: "Vip",
-          icon: "cubeic-vip",
-        },
-        {
-          label: "Me",
-          icon: "cubeic-person",
-        },
-      ],
       showConsole: true,
     };
   },

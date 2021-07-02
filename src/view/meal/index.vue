@@ -27,11 +27,12 @@
           <span class="custom-title">🗒️：{{ item.remark }}</span>
           <br />
 
-          <div v-if="item.photos != ''">
+          <div v-if="item.photos != ''" style="max-height: 288px">
             <van-image
               v-for="(img, index) in item.photos.split(',')"
-              :src="img"
+              :src="img + imgParam2"
               :key="index"
+              lazy-load
             />
           </div>
         </template>
@@ -44,7 +45,10 @@
 <script>
 import { fetch, getPayTypes, getTypes } from "@/api/meal.js";
 import FloatBtn from "../../components/FloatBtn.vue";
+import Vue from 'vue';
+import { Lazyload } from 'vant';
 
+Vue.use(Lazyload);
 export default {
   name: "meal",
   components: { FloatBtn },
@@ -66,6 +70,8 @@ export default {
       typeArr: [],
       payTypeArr: [],
       mealData: [],
+      imgParam : '?imageMogr2/quality/40',
+      imgParam2 : '?imageView2/1/w/432/h/576/q/40',
     };
   },
   methods: {
