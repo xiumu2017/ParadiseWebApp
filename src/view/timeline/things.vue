@@ -102,20 +102,20 @@
         >
       </div>
     </van-form>
-    <baidu-map
-      class="bm-view"
-      center="合肥"
-      ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"
-      @ready="handler"
-    >
-      <bm-geolocation
-        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
-        :showAddressBar="true"
-        :autoLocation="true"
-        @locationSuccess="locationSuccess"
-        @locationError="locationError"
-      ></bm-geolocation>
-    </baidu-map>
+<!--    <baidu-map-->
+<!--      class="bm-view"-->
+<!--      center="合肥"-->
+<!--      ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"-->
+<!--      @ready="handler"-->
+<!--    >-->
+<!--      <bm-geolocation-->
+<!--        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"-->
+<!--        :showAddressBar="true"-->
+<!--        :autoLocation="true"-->
+<!--        @locationSuccess="locationSuccess"-->
+<!--        @locationError="locationError"-->
+<!--      ></bm-geolocation>-->
+<!--    </baidu-map>-->
   </div>
 </template>
 
@@ -124,12 +124,12 @@ import { create } from "@/api/timeline.js";
 import { upload } from "@/utils/upload.js";
 import Vue from "vue";
 import { Uploader } from "vant";
-import BaiduMap from "vue-baidu-map/components/map/Map.vue";
-import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
+// import BaiduMap from "vue-baidu-map/components/map/Map.vue";
+// import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
 
 Vue.use(Uploader);
 export default {
-  components: { BaiduMap, BmGeolocation },
+  // components: { BaiduMap, BmGeolocation },
   data() {
     return {
       minDate: new Date(2021, 0, 1),

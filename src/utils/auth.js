@@ -8,8 +8,7 @@ export function getToken() {
 
 export function setToken(token) {
     let num = 7; //失效时间7天
-    let time = new Date(new Date().getTime() + num * 24 * 60 * 60 * 1000);
-    return Cookies.set(TokenKey, token, {expires: time})
+    return Cookies.set(TokenKey, token, {expires: num})
 }
 
 export function removeToken() {
