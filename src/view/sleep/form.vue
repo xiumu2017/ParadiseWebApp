@@ -68,6 +68,9 @@
         v-model="formData.memory"
         name="memory"
         label="睡前回忆"
+        type="textarea"
+        rows="3"
+        autosize
         placeholder=""
       />
       <van-field
