@@ -57,6 +57,13 @@ const routes = [
     }
   },
   {
+    name: 'word',
+    component: () => import('./view/word'),
+    meta: {
+      title: '📕 单词本'
+    }
+  },
+  {
     name: 'home',
     component: () => import('./view/home'),
     meta: {

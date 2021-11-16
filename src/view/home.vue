@@ -11,6 +11,7 @@
         <van-grid-item icon="like" text="诗" to="/poem" />
         <van-grid-item icon="star" text="" to="/login" />
         <van-grid-item icon="setting" text="Console开关" @click="showVconsole" />
+        <van-grid-item icon="setting" text="单词本" to="/word" />
       </van-grid>
     </div>
     <!-- <cube-tab-bar

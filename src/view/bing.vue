@@ -65,7 +65,6 @@ export default {
       this.bings.forEach(item => {
         this.images.push(item.url);
       })
-      this.show = true;
       this.desc = this.bings[0].title;
       this.date = this.bings[0].date;
     });
