@@ -69,7 +69,7 @@
         name="memory"
         label="睡前回忆"
         type="textarea"
-        rows="3"
+        rows="2"
         autosize
         placeholder=""
       />
@@ -94,7 +94,7 @@
         type="textarea"
         placeholder="请输入备注"
       />
-      <div style="margin: 16px">
+      <div style="margin: 16px 16px 56px 16px;">
         <van-button round block type="info" native-type="submit"
           >提交</van-button
         >
