@@ -102,20 +102,20 @@
         >
       </div>
     </van-form>
-<!--    <baidu-map-->
-<!--      class="bm-view"-->
-<!--      center="合肥"-->
-<!--      ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"-->
-<!--      @ready="handler"-->
-<!--    >-->
-<!--      <bm-geolocation-->
-<!--        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"-->
-<!--        :showAddressBar="true"-->
-<!--        :autoLocation="true"-->
-<!--        @locationSuccess="locationSuccess"-->
-<!--        @locationError="locationError"-->
-<!--      ></bm-geolocation>-->
-<!--    </baidu-map>-->
+    <!--    <baidu-map-->
+    <!--      class="bm-view"-->
+    <!--      center="合肥"-->
+    <!--      ak="5HzpfnYkCaIt7saGDIsU9EAFw7eU18bQ"-->
+    <!--      @ready="handler"-->
+    <!--    >-->
+    <!--      <bm-geolocation-->
+    <!--        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"-->
+    <!--        :showAddressBar="true"-->
+    <!--        :autoLocation="true"-->
+    <!--        @locationSuccess="locationSuccess"-->
+    <!--        @locationError="locationError"-->
+    <!--      ></bm-geolocation>-->
+    <!--    </baidu-map>-->
   </div>
 </template>
 
@@ -124,6 +124,8 @@ import { create } from "@/api/timeline.js";
 import { upload } from "@/utils/upload.js";
 import Vue from "vue";
 import { Uploader } from "vant";
+import { getCurrentPosition } from "@/utils/geoUtils.js";
+import { regeo } from "@/api/geo.js";
 // import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 // import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
 
@@ -150,6 +152,7 @@ export default {
       showStartTimePicker: false,
       showEndTimePicker: false,
       center: {},
+      currentPosition: "",
     };
   },
   created() {
@@ -163,6 +166,21 @@ export default {
       this.fillWithZero(now.getMinutes());
     this.formData.startTime = time;
     this.formData.endTime = time;
+    // 获取当前位置
+    getCurrentPosition()
+      .then((position) => {
+        console.log(
+          `当前位置经度：${position.latitude}，纬度：${position.longitude}`
+        );
+        this.currentPosition = position;
+        regeo(position.longitude + "," + position.latitude).then((res) => {
+          console.log("regeo", res);
+          this.formData.location = res.regeocode.formatted_address;
+        });
+      })
+      .catch((error) => {
+        console.log(`定位失败，原因：${error}`);
+      });
   },
   methods: {
     // afterRead(file) {
