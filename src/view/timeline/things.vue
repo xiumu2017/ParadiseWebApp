@@ -66,15 +66,30 @@
         :rules="[{ required: true, message: '请填写标签' }]"
       />
       <van-field
-        v-model="formData.location"
-        rows="2"
-        autosize
+        readonly
+        clickable
         name="location"
-        label="在哪儿"
-        type="textarea"
-        placeholder="在哪里呢~"
-        :rules="[{ required: true, message: '请填写在哪儿' }]"
+        v-model="formData.location"
+        label="位置"
+        placeholder="点击选择位置"
+        @click="showLocationPicker = true"
+        :rules="[{ required: true, message: '请选择位置信息' }]"
       />
+      <van-popup v-model="showLocationPicker" position="bottom">
+        <van-picker
+          show-toolbar
+          :columns="locationList"
+          @confirm="onConfirmForLocation"
+          @cancel="showLocationPicker = false"
+          >
+        <template slot="confirm">
+          <span style="color: #1989fa">确认</span>
+        </template>
+        <template slot="option" slot-scope="option">
+          <span style="color: #1989fa">{{ option }}</span>
+        </template>
+        </van-picker>
+      </van-popup>
       <van-field
         v-model="formData.remark"
         rows="3"
@@ -153,6 +168,8 @@ export default {
       showEndTimePicker: false,
       center: {},
       currentPosition: "",
+      showLocationPicker: false,
+      locationList: []
     };
   },
   created() {
@@ -175,7 +192,10 @@ export default {
         this.currentPosition = position;
         regeo(position.longitude + "," + position.latitude).then((res) => {
           console.log("regeo", res);
-          this.formData.location = res.regeocode.formatted_address;
+          // this.formData.location = res.regeocode.formatted_address;
+          this.locationList = res.regeocode.pois.map((item) => {
+            return item.name;
+          });
         });
       })
       .catch((error) => {
@@ -255,6 +275,10 @@ export default {
     onConfirm4EndTime(time) {
       this.formData.endTime = time;
       this.showEndTimePicker = false;
+    },
+    onConfirmForLocation(location) {
+      this.formData.location = location;
+      this.showLocationPicker = false;
     },
     fillWithZero(d) {
       return d < 10 ? "0" + d : d;

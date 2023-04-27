@@ -9,8 +9,8 @@ export function regeo(location) {
     params: {
       location: location,
       key: key,
-      extensions: 'base',
-      radius: 100
+      extensions: 'all',
+      radius: 1000
     }
   })
 }
