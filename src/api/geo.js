@@ -14,3 +14,16 @@ export function regeo(location) {
     }
   })
 }
+
+// 坐标系转换
+export function convert(location) {
+  return request({
+    url: '/assistant/coordinate/convert',
+    method: 'get',
+    params: {
+      locations: location,
+      key: key,
+      coordsys: 'gps'
+    }
+  })
+}

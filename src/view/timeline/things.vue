@@ -140,7 +140,7 @@ import { upload } from "@/utils/upload.js";
 import Vue from "vue";
 import { Uploader } from "vant";
 import { getCurrentPosition } from "@/utils/geoUtils.js";
-import { regeo } from "@/api/geo.js";
+import { regeo,convert } from "@/api/geo.js";
 // import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 // import BmGeolocation from "vue-baidu-map/components/controls/Geolocation.vue";
 
@@ -190,13 +190,18 @@ export default {
           `当前位置经度：${position.latitude}，纬度：${position.longitude}`
         );
         this.currentPosition = position;
-        regeo(position.longitude + "," + position.latitude).then((res) => {
+        let location = position.longitude + "," + position.latitude
+        convert(location).then((res) => {
+          console.log("convert", res);
+          location = res.locations;
+          regeo(location).then((res) => {
           console.log("regeo", res);
           // this.formData.location = res.regeocode.formatted_address;
           this.locationList = res.regeocode.pois.map((item) => {
             return item.name;
           });
         });
+        })
       })
       .catch((error) => {
         console.log(`定位失败，原因：${error}`);
